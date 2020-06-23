@@ -95,7 +95,10 @@ int main()
 		BlackCardColor[BlackCardNum[0] + 1] = c;
 		BlackCardNum[0] = BlackCardNum[0] + 1;
 	}
-	//复制两组牌的大小用以操作比较
+	//保存两幅手牌的牌型变量 0散牌 1对子
+	int flagW = 0;
+	int flagB = 0;
+	//复制两组牌的大小用以操作判定牌型
 	int WhiteSanpai[6];
 	int BlackSanpai[6];
 	int i = 1;
@@ -132,33 +135,139 @@ int main()
 			}
 		}
 	}
-	//比较牌的大小
-	int flag = 0;
-	for (i = 1; i < 6; i++)
+	//判定1对子牌型
+	for (i = 1; i < 5; i++)
 	{
-		if (WhiteSanpai[i] > BlackSanpai[i])
+		if (WhiteSanpai[i] == WhiteSanpai[i + 1])
 		{
-			flag = 1; 
-			break;
-		}
-		if (WhiteSanpai[i] < BlackSanpai[i])
-		{
-			flag = -1; 
-			break;
+			flagW = 1;
 		}
 	}
-	//根据比较得到的flag值输出结果
-	if (flag == 0)
+	for (i = 1; i < 5; i++)
 	{
-		printf("Tie");
+		if (BlackSanpai[i] == BlackSanpai[i + 1])
+		{
+			flagB = 1;
+		}
 	}
-	if (flag == 1)
+	//先按照牌型比较大小
+	if (flagW >flagB)
 	{
 		printf("White Win");
 	}
-	if (flag == -1)
+	if (flagW<flagB)
 	{
 		printf("Black Win");
+	}
+	//牌型相同比较大小
+	if (flagW == 0 && flagB == 0)
+	{
+		//比较牌的大小
+		int flag = 0;
+		for (i = 1; i < 6; i++)
+		{
+			if (WhiteSanpai[i] > BlackSanpai[i])
+			{
+				flag = 1;
+				break;
+			}
+			if (WhiteSanpai[i] < BlackSanpai[i])
+			{
+				flag = -1;
+				break;
+			}
+		}
+		//根据比较得到的flag值输出结果
+		if (flag == 0)
+		{
+			printf("Tie");
+		}
+		if (flag == 1)
+		{
+			printf("White Win");
+		}
+		if (flag == -1)
+		{
+			printf("Black Win");
+		}
+	}
+	if (flagW == 1 && flagB == 1)
+	{
+		int i = 0;
+		int j = 0;
+		int duiziW;
+		int duiziB;
+		for (i = 1; i < 5; i++)
+		{
+			if (WhiteSanpai[i] == WhiteSanpai[i + 1])
+			{
+				duiziW = WhiteSanpai[i];
+				WhiteSanpai[i] = 0;
+				WhiteSanpai[i + 1] = 0;
+			}
+		}
+		for (i = 1; i < 5; i++)
+		{
+			if (BlackSanpai[i] == BlackSanpai[i + 1])
+			{
+				duiziB = BlackSanpai[i];
+				BlackSanpai[i] = 0;
+				BlackSanpai[i + 1] = 0;
+			}
+		}
+		if (duiziW >duiziB)
+		{
+			printf("White Win");
+			return 0;
+		}
+		if (duiziW<duiziB)
+		{
+			printf("Black Win");
+			return 0;
+		}
+		for (i = 1; i < 5; i++)
+		{
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
+				{
+					t = WhiteSanpai[j];
+					WhiteSanpai[j] = WhiteSanpai[j + 1];
+					WhiteSanpai[j + 1] = t;
+				}
+			}
+		}
+		for (i = 1; i < 5; i++)
+		{
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (BlackSanpai[j]<BlackSanpai[j + 1])
+				{
+					t = BlackSanpai[j];
+					BlackSanpai[j] = BlackSanpai[j + 1];
+					BlackSanpai[j + 1] = t;
+				}
+			}
+		}
+		int numW = 10000 * WhiteSanpai[1] + 100 * WhiteSanpai[2] + WhiteSanpai[3];
+		int numB = 10000 * BlackSanpai[1] + 100 * BlackSanpai[2] + BlackSanpai[3];
+		if (numW >numB)
+		{
+			printf("White Win");
+			return 0;
+		}
+		if (numW<numB)
+		{
+			printf("Black Win");
+			return 0;
+		}
+		if (numW==numB)
+		{
+			printf("Tie");
+			return 0;
+		}
 	}
 	system("pause");
 	return 0;
