@@ -150,6 +150,33 @@ int main()
 			flagB = 1;
 		}
 	}
+	//判定2两对牌型
+	int flag2W = 0;
+	int flag2B = 0;
+	for (i = 1; i < 5; i++)
+	{
+		if (WhiteSanpai[i] == WhiteSanpai[i + 1])
+		{
+			flag2W = flag2W + 1;
+			i = i + 1;
+		}
+	}
+	for (i = 1; i < 5; i++)
+	{
+		if (BlackSanpai[i] == BlackSanpai[i + 1])
+		{
+			flag2B = flag2B + 1;
+			i = i + 1;
+		}
+	}
+	if (flag2W == 2)
+	{
+		flagW = 2;
+	}
+	if (flag2B == 2)
+	{
+		flagB = 2;
+	}
 	//先按照牌型比较大小
 	if (flagW >flagB)
 	{
@@ -256,17 +283,93 @@ int main()
 		if (numW >numB)
 		{
 			printf("White Win");
-			return 0;
 		}
 		if (numW<numB)
 		{
 			printf("Black Win");
-			return 0;
 		}
 		if (numW==numB)
 		{
 			printf("Tie");
-			return 0;
+		}
+	}
+	if (flagW == 2 && flagB == 2)
+	{
+		int numWbig, numWsmall;
+		int numBbig,numBsmall;
+		for (i = 1; i < 5; i++)
+		{
+			if (WhiteSanpai[i] == WhiteSanpai[i + 1])
+			{
+				numWbig = WhiteSanpai[i];
+				WhiteSanpai[i] = 0;
+				WhiteSanpai[i + 1] = 0;
+				i = i + 1;
+			}
+			if (WhiteSanpai[i] == WhiteSanpai[i + 1])
+			{
+				numWsmall = WhiteSanpai[i];
+				WhiteSanpai[i] = 0;
+				WhiteSanpai[i + 1] = 0;
+				i = i + 1;
+			}
+		}
+		for (i = 1; i < 5; i++)
+		{
+			if (BlackSanpai[i] == BlackSanpai[i + 1])
+			{
+				numBbig = BlackSanpai[i];
+				BlackSanpai[i] = 0;
+				BlackSanpai[i + 1] = 0;
+				i = i + 1;
+			}
+			if (BlackSanpai[i] == BlackSanpai[i + 1])
+			{
+				numBsmall = BlackSanpai[i];
+				BlackSanpai[i] = 0;
+				BlackSanpai[i + 1] = 0;
+				i = i + 1;
+			}
+		}
+		for (i = 1; i < 5; i++)
+		{
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
+				{
+					t = WhiteSanpai[j];
+					WhiteSanpai[j] = WhiteSanpai[j + 1];
+					WhiteSanpai[j + 1] = t;
+				}
+			}
+		}
+		for (i = 1; i < 5; i++)
+		{
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (BlackSanpai[j]<BlackSanpai[j + 1])
+				{
+					t = BlackSanpai[j];
+					BlackSanpai[j] = BlackSanpai[j + 1];
+					BlackSanpai[j + 1] = t;
+				}
+			}
+		}
+		int numW = 10000 * numWbig + 100 * numWsmall + WhiteSanpai[1];
+		int numB = 10000 * numBbig + 100 * numBsmall + BlackSanpai[1];
+		if (numW >numB)
+		{
+			printf("White Win");
+		}
+		if (numW<numB)
+		{
+			printf("Black Win");
+		}
+		if (numW == numB)
+		{
+			printf("Tie");
 		}
 	}
 	system("pause");
