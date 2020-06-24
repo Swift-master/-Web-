@@ -56,6 +56,22 @@ int numChange(char c)
 		return 14;
 	}
 }
+//牌型相同比较大小并输出
+void compare(int numW, int numB)
+{
+	if (numW >numB)
+	{
+		printf("White Win");
+	}
+	if (numW<numB)
+	{
+		printf("Black Win");
+	}
+	if (numW == numB)
+	{
+		printf("Tie");
+	}
+}
 int main()
 {
 	int WhiteCardNum[6];
@@ -95,7 +111,7 @@ int main()
 		BlackCardColor[BlackCardNum[0] + 1] = c;
 		BlackCardNum[0] = BlackCardNum[0] + 1;
 	}
-	//保存两幅手牌的牌型变量 0散牌 1对子
+	//保存两幅手牌的牌型变量 0散牌 1对子 2两对 3三条
 	int flagW = 0;
 	int flagB = 0;
 	//复制两组牌的大小用以操作判定牌型
@@ -176,6 +192,21 @@ int main()
 	if (flag2B == 2)
 	{
 		flagB = 2;
+	}
+	//判定3三条牌型
+	for (i = 1; i < 4; i++)
+	{
+		if (WhiteSanpai[i] == WhiteSanpai[i + 1]&& WhiteSanpai[i+1]==WhiteSanpai[i+2])
+		{
+			flagW = 3;
+		}
+	}
+	for (i = 1; i < 4; i++)
+	{
+		if (BlackSanpai[i] == BlackSanpai[i + 1]&& BlackSanpai[i+1]== BlackSanpai[i+2])
+		{
+			flagB = 3;
+		}
 	}
 	//先按照牌型比较大小
 	if (flagW >flagB)
@@ -280,18 +311,7 @@ int main()
 		}
 		int numW = 10000 * WhiteSanpai[1] + 100 * WhiteSanpai[2] + WhiteSanpai[3];
 		int numB = 10000 * BlackSanpai[1] + 100 * BlackSanpai[2] + BlackSanpai[3];
-		if (numW >numB)
-		{
-			printf("White Win");
-		}
-		if (numW<numB)
-		{
-			printf("Black Win");
-		}
-		if (numW==numB)
-		{
-			printf("Tie");
-		}
+		compare(numW, numB);
 	}
 	if (flagW == 2 && flagB == 2)
 	{
@@ -359,18 +379,63 @@ int main()
 		}
 		int numW = 10000 * numWbig + 100 * numWsmall + WhiteSanpai[1];
 		int numB = 10000 * numBbig + 100 * numBsmall + BlackSanpai[1];
-		if (numW >numB)
+		compare(numW, numB);
+	}
+	if (flagW == 3 && flagB == 3)
+	{
+		int santiaoW;
+		int santiaoB;
+		for (i = 1; i < 4; i++)
 		{
-			printf("White Win");
+			if (WhiteSanpai[i] == WhiteSanpai[i + 1] && WhiteSanpai[i + 1] == WhiteSanpai[i + 2])
+			{
+				santiaoW = 10000 * WhiteSanpai[i];
+				WhiteSanpai[i] = 0;
+				WhiteSanpai[i + 1] = 0;
+				WhiteSanpai[i + 2] = 0;
+				i = i + 2;
+			}
 		}
-		if (numW<numB)
+		for (i = 1; i < 4; i++)
 		{
-			printf("Black Win");
+			if (BlackSanpai[i] == BlackSanpai[i + 1] && BlackSanpai[i + 1] == BlackSanpai[i + 2])
+			{
+				santiaoB = 10000 * BlackSanpai[i];
+				BlackSanpai[i] = 0;
+				BlackSanpai[i + 1] = 0;
+				BlackSanpai[i + 2] = 0;
+				i = i + 2;
+			}
 		}
-		if (numW == numB)
+		for (i = 1; i < 5; i++)
 		{
-			printf("Tie");
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
+				{
+					t = WhiteSanpai[j];
+					WhiteSanpai[j] = WhiteSanpai[j + 1];
+					WhiteSanpai[j + 1] = t;
+				}
+			}
 		}
+		for (i = 1; i < 5; i++)
+		{
+			int t;
+			for (j = 1; j < 6 - i; j++)
+			{
+				if (BlackSanpai[j]<BlackSanpai[j + 1])
+				{
+					t = BlackSanpai[j];
+					BlackSanpai[j] = BlackSanpai[j + 1];
+					BlackSanpai[j + 1] = t;
+				}
+			}
+		}
+		santiaoW = santiaoW + 100 * WhiteSanpai[1] + WhiteSanpai[2];
+		santiaoB = santiaoB + 100 * BlackSanpai[1] + BlackSanpai[2];
+		compare(santiaoW, santiaoB);
 	}
 	system("pause");
 	return 0;
