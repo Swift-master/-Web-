@@ -111,7 +111,7 @@ int main()
 		BlackCardColor[BlackCardNum[0] + 1] = c;
 		BlackCardNum[0] = BlackCardNum[0] + 1;
 	}
-	//保存两幅手牌的牌型变量 0散牌 1对子 2两对 3三条
+	//保存两幅牌牌型的变量 0散牌 1对子 2两对 3三条 4顺子
 	int flagW = 0;
 	int flagB = 0;
 	//复制两组牌的大小用以操作判定牌型
@@ -207,6 +207,31 @@ int main()
 		{
 			flagB = 3;
 		}
+	}
+	//判定4顺子牌型
+	int flag4W=0;
+	int flag4B=0;
+	for (i = 1; i < 5; i++)
+	{
+		if (WhiteSanpai[i] - WhiteSanpai[i + 1]==1 )
+		{
+			flag4W = flag4W + 1;
+		}
+	}
+	for (i = 1; i < 5; i++)
+	{
+		if (BlackSanpai[i] - BlackSanpai[i + 1] ==1)
+		{
+			flag4B = flag4B + 1;
+		}
+	}
+	if (flag4W == 4)
+	{
+		flagW = 4;
+	}
+	if (flag4B == 4)
+	{
+		flagB = 4;
 	}
 	//先按照牌型比较大小
 	if (flagW >flagB)
@@ -436,6 +461,10 @@ int main()
 		santiaoW = santiaoW + 100 * WhiteSanpai[1] + WhiteSanpai[2];
 		santiaoB = santiaoB + 100 * BlackSanpai[1] + BlackSanpai[2];
 		compare(santiaoW, santiaoB);
+	}
+	if (flagW == 4 && flagB == 4)
+	{
+		compare(WhiteSanpai[1], BlackSanpai[1]);
 	}
 	system("pause");
 	return 0;
