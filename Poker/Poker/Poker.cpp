@@ -111,7 +111,7 @@ int main()
 		BlackCardColor[BlackCardNum[0] + 1] = c;
 		BlackCardNum[0] = BlackCardNum[0] + 1;
 	}
-	//保存两幅牌牌型的变量 0散牌 1对子 2两对 3三条 4顺子
+	//保存两幅牌牌型的变量 0散牌 1对子 2两对 3三条 4顺子 5同花
 	int flagW = 0;
 	int flagB = 0;
 	//复制两组牌的大小用以操作判定牌型
@@ -232,6 +232,31 @@ int main()
 	if (flag4B == 4)
 	{
 		flagB = 4;
+	}
+	//判定5同花牌型
+	int flag5W = 0;
+	int flag5B = 0;
+	for (i = 1; i < 5; i++)
+	{
+		if (WhiteCardColor[i] == WhiteCardColor[i + 1] )
+		{
+			flag5W = flag5W + 1;
+		}
+	}
+	for (i = 1; i < 5; i++)
+	{
+		if (BlackCardColor[i] == BlackCardColor[i + 1])
+		{
+			flag5B = flag5B + 1;
+		}
+	}
+	if (flag5W == 4)
+	{
+		flagW = 5;
+	}
+	if (flag5B == 4)
+	{
+		flagB = 5;
 	}
 	//先按照牌型比较大小
 	if (flagW >flagB)
@@ -465,6 +490,37 @@ int main()
 	if (flagW == 4 && flagB == 4)
 	{
 		compare(WhiteSanpai[1], BlackSanpai[1]);
+	}
+	if (flagW == 5 && flagB == 5)
+	{
+		//比较牌的大小
+		int flag = 0;
+		for (i = 1; i < 6; i++)
+		{
+			if (WhiteSanpai[i] > BlackSanpai[i])
+			{
+				flag = 1;
+				break;
+			}
+			if (WhiteSanpai[i] < BlackSanpai[i])
+			{
+				flag = -1;
+				break;
+			}
+		}
+		//根据比较得到的flag值输出结果
+		if (flag == 0)
+		{
+			printf("Tie");
+		}
+		if (flag == 1)
+		{
+			printf("White Win");
+		}
+		if (flag == -1)
+		{
+			printf("Black Win");
+		}
 	}
 	system("pause");
 	return 0;
