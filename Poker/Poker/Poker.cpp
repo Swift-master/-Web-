@@ -72,6 +72,38 @@ void compare(int numW, int numB)
 		printf("Tie");
 	}
 }
+//将两组操作空间数组排序
+void sort(int WhiteSanpai[],int BlackSanpai[])
+{
+	int i = 0;
+	int j = 0;
+	for (i = 1; i < 5; i++)
+	{
+		int t;
+		for (j = 1; j < 6 - i; j++)
+		{
+			if (WhiteSanpai[j]<WhiteSanpai[j + 1])
+			{
+				t = WhiteSanpai[j];
+				WhiteSanpai[j] = WhiteSanpai[j + 1];
+				WhiteSanpai[j + 1] = t;
+			}
+		}
+	}
+	for (i = 1; i < 5; i++)
+	{
+		int t;
+		for (j = 1; j < 6 - i; j++)
+		{
+			if (BlackSanpai[j]<BlackSanpai[j + 1])
+			{
+				t = BlackSanpai[j];
+				BlackSanpai[j] = BlackSanpai[j + 1];
+				BlackSanpai[j + 1] = t;
+			}
+		}
+	}
+}
 int main()
 {
 	int WhiteCardNum[6];
@@ -125,32 +157,7 @@ int main()
 		BlackSanpai[i] = BlackCardNum[i];
 	}
 	//对两组牌排序
-	for (i = 1; i < 5; i++)
-	{
-		int t;
-		for (j = 1; j < 6-i; j++)
-		{
-			if (WhiteSanpai[j]<WhiteSanpai[j+1])
-			{
-				t = WhiteSanpai[j];
-				WhiteSanpai[j] = WhiteSanpai[j + 1];
-				WhiteSanpai[j + 1] = t;
-			}
-		}
-	}
-	for (i = 1; i < 5; i++)
-	{
-		int t;
-		for (j = 1; j < 6-i; j++)
-		{
-			if (BlackSanpai[j]<BlackSanpai[j + 1])
-			{
-				t = BlackSanpai[j];
-				BlackSanpai[j] = BlackSanpai[j + 1];
-				BlackSanpai[j + 1] = t;
-			}
-		}
-	}
+	sort(WhiteSanpai, BlackSanpai);
 	//判定1对子牌型
 	for (i = 1; i < 5; i++)
 	{
@@ -342,32 +349,7 @@ int main()
 			printf("Black Win");
 			return 0;
 		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
-				{
-					t = WhiteSanpai[j];
-					WhiteSanpai[j] = WhiteSanpai[j + 1];
-					WhiteSanpai[j + 1] = t;
-				}
-			}
-		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (BlackSanpai[j]<BlackSanpai[j + 1])
-				{
-					t = BlackSanpai[j];
-					BlackSanpai[j] = BlackSanpai[j + 1];
-					BlackSanpai[j + 1] = t;
-				}
-			}
-		}
+		sort(WhiteSanpai, BlackSanpai);
 		int numW = 10000 * WhiteSanpai[1] + 100 * WhiteSanpai[2] + WhiteSanpai[3];
 		int numB = 10000 * BlackSanpai[1] + 100 * BlackSanpai[2] + BlackSanpai[3];
 		compare(numW, numB);
@@ -410,32 +392,7 @@ int main()
 				i = i + 1;
 			}
 		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
-				{
-					t = WhiteSanpai[j];
-					WhiteSanpai[j] = WhiteSanpai[j + 1];
-					WhiteSanpai[j + 1] = t;
-				}
-			}
-		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (BlackSanpai[j]<BlackSanpai[j + 1])
-				{
-					t = BlackSanpai[j];
-					BlackSanpai[j] = BlackSanpai[j + 1];
-					BlackSanpai[j + 1] = t;
-				}
-			}
-		}
+		sort(WhiteSanpai, BlackSanpai);
 		int numW = 10000 * numWbig + 100 * numWsmall + WhiteSanpai[1];
 		int numB = 10000 * numBbig + 100 * numBsmall + BlackSanpai[1];
 		compare(numW, numB);
@@ -466,32 +423,7 @@ int main()
 				i = i + 2;
 			}
 		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (WhiteSanpai[j]<WhiteSanpai[j + 1])
-				{
-					t = WhiteSanpai[j];
-					WhiteSanpai[j] = WhiteSanpai[j + 1];
-					WhiteSanpai[j + 1] = t;
-				}
-			}
-		}
-		for (i = 1; i < 5; i++)
-		{
-			int t;
-			for (j = 1; j < 6 - i; j++)
-			{
-				if (BlackSanpai[j]<BlackSanpai[j + 1])
-				{
-					t = BlackSanpai[j];
-					BlackSanpai[j] = BlackSanpai[j + 1];
-					BlackSanpai[j + 1] = t;
-				}
-			}
-		}
+		sort(WhiteSanpai, BlackSanpai);
 		santiaoW = santiaoW + 100 * WhiteSanpai[1] + WhiteSanpai[2];
 		santiaoB = santiaoB + 100 * BlackSanpai[1] + BlackSanpai[2];
 		compare(santiaoW, santiaoB);
