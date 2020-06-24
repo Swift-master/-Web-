@@ -111,7 +111,7 @@ int main()
 		BlackCardColor[BlackCardNum[0] + 1] = c;
 		BlackCardNum[0] = BlackCardNum[0] + 1;
 	}
-	//保存两幅牌牌型的变量 0散牌 1对子 2两对 3三条 4顺子 5同花
+	//保存两幅牌牌型的变量 0散牌 1对子 2两对 3三条 4顺子 5同花 6同花顺
 	int flagW = 0;
 	int flagB = 0;
 	//复制两组牌的大小用以操作判定牌型
@@ -257,6 +257,15 @@ int main()
 	if (flag5B == 4)
 	{
 		flagB = 5;
+	}
+	//判定6同花顺牌型
+	if (flag4W == 4 && flag5W == 4)
+	{
+		flagW = 6;
+	}
+	if (flag4B == 4 && flag5B == 4)
+	{
+		flagB = 6;
 	}
 	//先按照牌型比较大小
 	if (flagW >flagB)
@@ -521,6 +530,10 @@ int main()
 		{
 			printf("Black Win");
 		}
+	}
+	if (flagW == 6 && flagB == 6)
+	{
+		compare(WhiteSanpai[1], BlackSanpai[1]);
 	}
 	system("pause");
 	return 0;
